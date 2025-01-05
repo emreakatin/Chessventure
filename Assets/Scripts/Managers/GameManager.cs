@@ -9,25 +9,18 @@ namespace GameCore.Managers
         private const string current_level_index_key = "LevelIndex";
 
         [Title("Events")]
-        [SerializeField]
-        private GameEvent _onMetaLevelLoadRequest;
-
-        [SerializeField]
-        private GameEvent _onGameLevelLoadRequest;
+    
+        [SerializeField] private GameEvent _onGameLevelLoadRequest;
+        [SerializeField] private GameEvent _onGameLevelStartRequest;
+        [SerializeField] private GameEvent _onGameLevelCompleteRequest;
 
         [Header("References")]
-        [SerializeField]
-        private GameObject _mainMenuPrefab;
-
-        //private CoinManager _coinManager;
-
-        [SerializeField]
-        private GameObject[] _gameLevels;
-
-        [SerializeField]
-        private GameObject[] _metaLevels;
+        [SerializeField] private GameObject _mainMenuPrefab;
+        [SerializeField] private GameObject[] _gameLevels;
+        [SerializeField] private GameObject[] _metaLevels;
 
         private GameObject m_currentLevel;
+        private Player player;
 
         public static int LevelIndex
         {
@@ -42,36 +35,40 @@ namespace GameCore.Managers
         private void Awake()
         {
             DontDestroyOnLoad(this);
-            
             Load();
             SpawnGameLevel();
-
             _onGameLevelLoadRequest.Raise();
-
-            //_coinManager.Initialize();
-            //SpawnMainMenu();
-            
         }
-        
-        //write a functions to collect coins
-        //write a functions to collect powerups
-            
-    
+
+        private void Update()
+        {
+            // Test için next level
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                LoadNextLevel();
+            }
+
+            // Oyun başlatma
+           /*  if (Input.GetKeyDown(KeyCode.Space))
+            {
+                _onGameLevelStartRequest.Raise();
+                Debug.Log("Game started!");
+            } */
+        }
+
         private void OnEnable()
         {
-            _onMetaLevelLoadRequest.onRaise.AddListener(SpawnMetaLevel);
             _onGameLevelLoadRequest.onRaise.AddListener(SpawnGameLevel);
         }
 
         private void OnDisable()
         {
-            _onMetaLevelLoadRequest.onRaise.RemoveListener(SpawnMetaLevel);
             _onGameLevelLoadRequest.onRaise.RemoveListener(SpawnGameLevel);
         }
         
         private void Load()
         {
-            s_globalLevelCount = Resources.Load<GlobalInt>(ResourcesDirectiories.GLOBAL_META_LEVEL_COUNT);
+            s_globalLevelCount = Resources.Load<GlobalInt>(ResourceDirectories.GLOBAL_META_LEVEL_COUNT);
             s_globalLevelCount.value = PlayerPrefs.GetInt(current_level_index_key, 1);
         }
 
@@ -80,11 +77,19 @@ namespace GameCore.Managers
             PlayerPrefs.SetInt(current_level_index_key, s_globalLevelCount.value);
         }
 
-        private void SpawnMainMenu()
+        public void LoadNextLevel()
         {
-            DestroyCurrentLevel();
+            s_globalLevelCount.value++;
+            Save();
+            SpawnGameLevel();
+        }
 
-            Instantiate(_mainMenuPrefab);
+        private void ResetGame()
+        {
+            s_globalLevelCount.value = 1; // Başlangıç seviyesine döndür
+            Save();
+            SpawnGameLevel();
+            Debug.Log("Game reset to initial level.");
         }
 
         private void SpawnGameLevel()
@@ -92,22 +97,18 @@ namespace GameCore.Managers
             Save();
             DestroyCurrentLevel();
 
-            if (s_globalLevelCount.value - 1 >= _gameLevels.Length)
-            {
-                s_globalLevelCount.value = _gameLevels.Length - 1;
-            }
+            // Level indeksini döngüsel hale getir
+            int levelIndex = (s_globalLevelCount.value - 1) % _gameLevels.Length;
             
-            GameObject prefab = _gameLevels[s_globalLevelCount.value-1];
+            GameObject prefab = _gameLevels[levelIndex];
             m_currentLevel = Instantiate(prefab);
         }
-
 
         private void SpawnMetaLevel()
         {
             DestroyCurrentLevel();
             
             int index = s_globalLevelCount.value;
-
             if (index > _metaLevels.Length)
                 index = _metaLevels.Length;
 

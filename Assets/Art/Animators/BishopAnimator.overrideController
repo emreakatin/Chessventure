@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BishopAnimator
+  m_Controller: {fileID: 9100000, guid: 7a70916eb8bc94028b9f544956a85484, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: -203655887218126122, guid: 7b110efdc8e86419193f35d3670e172f, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: 2ce17788e57a34853bbca69b65bb4a41, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: cfbeff55956e74a018c79077625336a7, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: 17aff73300cc140b8bdbba28774e37f4, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: 429f6c16824fc471f8edac8f80ed6e77, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: 48e52223fd5cb4ec1ad8a3616953ad09, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: 6688a4a9c85db4a3095442ef2a24acfb, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: dbfbb49095d01453ab758a4f57cb2b86, type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: 40099501b48ef4f71b773d796af6833e, type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: c3dee33009efb4e44b850b88bb013099, type: 3}
