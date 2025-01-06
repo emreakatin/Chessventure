@@ -1260,7 +1260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterData: {fileID: 11400000, guid: eb21c8f1c83614b828f17f179f34bc0c, type: 2}
   animator: {fileID: 0}
-  spawnOffset: {x: 0, y: 0, z: 0}
+  spawnOffset: {x: 0, y: -0.5, z: 0}
 --- !u!95 &2046517648184754570
 Animator:
   serializedVersion: 7
@@ -1813,7 +1813,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4293495775529089000, guid: a3fda93c3e9a34336a13f0dc034a157a, type: 3}
+  - {fileID: 2100000, guid: fbd3b72c843493549bf17e21999c2b92, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

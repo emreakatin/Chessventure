@@ -1,52 +1,87 @@
 using UnityEngine;
 using UnityEngine.AI;
+using ThirteenPixels.Soda;
 
 [RequireComponent(typeof(Enemy), typeof(NavMeshAgent))]
 public class EnemyMovement : CharacterMovement
 {
     private NavMeshAgent navMeshAgent;
+    private Transform playerTransform;
+    private Vector3 patrolStartPoint; // Nöbet başlangıç noktası
+    private Vector3 patrolDirection; // Nöbet yönü
+    private float patrolDistance = 5f; // Nöbet mesafesi
+    private bool isPatrolling = false; // Nöbet durumu
+
+    public bool IsPatrolling => isPatrolling;
+
+    public NavMeshAgent NavMeshAgent => navMeshAgent;
 
     private void Awake()
     {
-        base.Awake();
         navMeshAgent = GetComponent<NavMeshAgent>();
+    }
+    private void Start()
+    {
+        
+        playerTransform = FindObjectOfType<Player>().transform; // Oyuncu referansını al
+     
+
+        // Nöbet başlangıç noktasını belirle
+        patrolStartPoint = transform.position;
+        // Sağ veya sol yön belirle
+        patrolDirection = Random.value > 0.5f ? Vector3.right : Vector3.left; // Sağ veya sol
+        isPatrolling = true; // Nöbeti başlat
+    }
+
+    private void Update()
+    {
+      
+    }
+
+     public void UpdateMovementData(CharacterData data)
+    {
+        base.UpdateMovementData(data);
+        navMeshAgent.speed = currentMovementSpeed;
+    }
+
+    public void Patrol()
+    {
+        // Nöbet mesafesi kadar hareket et
+        if (Vector3.Distance(transform.position, patrolStartPoint + patrolDirection * patrolDistance) < 0.1f)
+        {
+            // Başlangıç noktasına geri dön
+            patrolDirection = -patrolDirection; // Yönü değiştir
+        }
+
+        navMeshAgent.SetDestination(patrolStartPoint + patrolDirection * patrolDistance);
+    }
+
+    public void ChasePlayer()
+    {
+        navMeshAgent.SetDestination(playerTransform.position);
     }
 
     public override void Move(Vector3 direction)
     {
-        // Düşmanın hareket etme mantığı
         navMeshAgent.SetDestination(direction);
-        
-        // Eğer düşman oyuncuya yakınsa koşma mantığını kontrol et
-        if (Vector3.Distance(transform.position, direction) < 5f) // Örnek mesafe
-        {
-            navMeshAgent.speed = currentMovementSpeed * 1.5f; // Koşma hızı
-        }
-        else
-        {
-            navMeshAgent.speed = currentMovementSpeed; // Normal hız
-        }
     }
 
     public override void Rotate(Vector3 direction)
     {
-        // Düşmanın yönlendirme mantığı
-        if (direction.magnitude > 0)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, currentRotationSpeed * Time.deltaTime);
-        }
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), currentRotationSpeed * Time.deltaTime);
     }
+
 
     public override bool IsMoving()
     {
-        // Düşmanın hareket edip etmediğini kontrol et
-        return navMeshAgent.velocity.magnitude > 0;
+        return navMeshAgent.velocity.magnitude > 0.1f;
+
     }
 
     public override bool IsRunning()
     {
-        // Düşmanın koşma durumu için kendi mantığınızı ekleyebilirsiniz
-        return navMeshAgent.speed > currentMovementSpeed; // Eğer hız normal hızdan fazlaysa koşuyor demektir
+        return navMeshAgent.speed > currentMovementSpeed;
     }
+
+   
 } 

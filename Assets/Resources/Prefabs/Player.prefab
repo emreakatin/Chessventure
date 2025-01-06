@@ -81,7 +81,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pieceHolder: {fileID: 5476456230778404149}
-  pieceOffset: {x: 0, y: 0, z: 0}
+  animator: {fileID: 0}
+  _onLevelUp: {fileID: 11400000, guid: 0dc2f347d98c37a4188e36141146a117, type: 2}
+  _onEnemyDied: {fileID: 11400000, guid: 5c188a16fa6bd403e863916c776aac5d, type: 2}
 --- !u!114 &377781411302720057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7835cfddfe81b480c8877609db92510c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth: 0
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []

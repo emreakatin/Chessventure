@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class HealthSystem : MonoBehaviour, IHealthSystem
 {
     private float maxHealth;
-    private float currentHealth;
+    public float currentHealth;
     private float defense;
     
     public UnityEvent<float> onHealthChanged;
@@ -24,7 +24,7 @@ public class HealthSystem : MonoBehaviour, IHealthSystem
 
     public void TakeDamage(float damage)
     {
-        if (IsDead) return;
+        //if (IsDead) return;
 
         float actualDamage = CalculateDamage(damage);
         currentHealth = Mathf.Max(0, currentHealth - actualDamage);

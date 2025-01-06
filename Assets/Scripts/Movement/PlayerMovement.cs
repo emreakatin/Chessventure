@@ -97,6 +97,6 @@ public class PlayerMovement : CharacterMovement
     {
         // Koşma durumu için bir kontrol ekle
         //Debug.Log(Input.GetKey(KeyCode.LeftShift));
-        return Input.GetKey(KeyCode.LeftShift);
+        return Input.GetKey(KeyCode.LeftShift) && IsMoving();
     }
 } 

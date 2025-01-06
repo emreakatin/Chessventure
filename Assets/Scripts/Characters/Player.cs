@@ -1,11 +1,16 @@
+using System;
 using UnityEngine;
-
+using ThirteenPixels.Soda;
 public class Player : Character
 {
     private const string PLAYER_LEVEL_KEY = "PlayerLevel";
     private int currentLevel = 0;
-    protected int killCount;
+    public int killCount;
     private float lastAttackTime = 0f; // Son saldırı zamanı
+    //private bool isAttacking = false;
+
+     public GameEvent _onLevelUp;
+     public GameEvent _onEnemyDied;
 
     protected override void Awake()
     {
@@ -13,6 +18,17 @@ public class Player : Character
         LoadPlayerLevel();
         InitializePlayer();
     }
+
+    private void OnEnable()
+    {
+        _onEnemyDied.onRaise.AddListener(OnEnemyKilled);
+    }
+    
+    private void OnDisable()
+    {
+        _onEnemyDied.onRaise.RemoveListener(OnEnemyKilled);
+    }
+    
 
     private void LoadPlayerLevel()
     {
@@ -64,7 +80,9 @@ public class Player : Character
             ChangePiece(nextPieceType);
             killCount = 0;
             SavePlayerLevel(); // Level atladığında kaydet
-            OnLevelUp();
+            
+            Invoke("OnLevelUp",1);
+            //OnLevelUp();
         }
     }
 
@@ -90,6 +108,13 @@ public class Player : Character
     private void OnLevelUp()
     {
         Debug.Log($"Leveled up to {CurrentPieceType}!");
+        _onLevelUp.Raise();
+    }
+
+    public override void OnDied()
+    {
+        base.OnDied();
+        //_onPlayerDied();
     }
 
     protected override string GetPiecePrefabPath(ChessPieceType pieceType)
@@ -99,6 +124,7 @@ public class Player : Character
 
     private void Update()
     {
+        base.Update();
         // Test için level atlama
         if (Input.GetKeyDown(KeyCode.T))
         {
@@ -113,61 +139,14 @@ public class Player : Character
             ResetPlayerProgress();
         }
 
-        // Animasyon güncellemeleri
-        UpdateAnimations();
-
-        // Saldırı kontrolü
-        if (Input.GetMouseButtonDown(0)) // Sol tık
+        // Saldırı girişi
+        if (Input.GetButtonDown("Fire1") && !isAttacking)
         {
             TryAttack();
         }
     }
 
-    private void UpdateAnimations()
-    {
-
-        if(animator != null)
-        {
-            // Örnek: Yürüyüş animasyonu
-        if (movementController.IsMoving())
-        {
-            //Debug.Log("isMoving");
-            animator.SetBool("isWalking", true);
-            animator.SetBool("isRunning", false);
-        }
-        else
-        {
-            //Debug.Log("isNotMoving");
-            animator.SetBool("isWalking", false);
-            animator.SetBool("isRunning", false);
-        }
-
-        // Koşma animasyonu
-        if (movementController.IsRunning())
-        {
-            animator.SetBool("isRunning", true);
-        }
-
-        // Ölme animasyonu
-        if (healthSystem.IsDead)
-        {
-            animator.SetBool("isDead", true);
-        }
-        else
-        {
-            animator.SetBool("isDead", false);
-        }
-
-        // Saldırı animasyonu
-        if (Input.GetKeyDown(KeyCode.Space)) // Örnek: Boşluk tuşu ile saldırı
-        {
-            animator.SetBool("isAttacking", true);
-        }
-        else
-        {
-            animator.SetBool("isAttacking", false);
-        }}
-    }
+    
 
     public void ResetPlayerProgress()
     {
@@ -181,22 +160,58 @@ public class Player : Character
     {
         if (Time.time >= lastAttackTime + characterData.attackCooldown)
         {
+            Debug.Log("Attacking");
             lastAttackTime = Time.time;
+            isAttacking = true;
+            animator.SetTrigger("Attack");
 
-            // Karakterin baktığı yönde düşman var mı kontrol et
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, characterData.attackRange))
+            Invoke("ResetAttack", characterData.attackCooldown);
+
+            // Sadece düşman katmanını kontrol et
+            int enemyLayerMask = LayerMask.GetMask("Enemy"); // "Enemy" adında bir katman oluşturmalısın
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, characterData.attackRange, enemyLayerMask);
+
+            Collider closestEnemy = null;
+            float closestDistance = Mathf.Infinity;
+
+            foreach (var hitCollider in hitColliders)
             {
-                IHealthSystem healthSystem = hit.collider.GetComponent<IHealthSystem>();
+                
+                IHealthSystem healthSystem = hitCollider.GetComponent<IHealthSystem>();
                 if (healthSystem != null)
                 {
-                    // Düşmana hasar ver
-                    float damage = characterData.attackPower - healthSystem.CurrentHealth; // Düşmanın savunmasını çıkar
-                    damage = Mathf.Max(damage, 0); // Negatif hasar olmasın
-                    healthSystem.TakeDamage(damage);
-                    Debug.Log($"Attacked {hit.collider.name} for {damage} damage!");
+                   
+                    float distanceToEnemy = Vector3.Distance(transform.position, hitCollider.transform.position);
+                    if (distanceToEnemy < closestDistance)
+                    {
+                        closestDistance = distanceToEnemy;
+                        closestEnemy = hitCollider;
+                    }
                 }
             }
+
+            if (closestEnemy != null)
+            {
+                Debug.Log("Hit: " + closestEnemy.name);
+                IHealthSystem healthSystem = closestEnemy.GetComponent<IHealthSystem>();
+        
+                // Düşmana hasar ver
+                if (!healthSystem.IsDead)
+                {
+                    float damage = characterData.attackPower;
+                    healthSystem.TakeDamage(damage);
+                }
+               
+            }
         }
+
+
+
+    }
+
+    
+    private void ResetAttack()
+    {
+        isAttacking = false;
     }
 } 

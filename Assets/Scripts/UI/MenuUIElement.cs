@@ -6,7 +6,8 @@ public enum MenuUIElementType
 {
     LevelStartButton,
     LevelCompleteButton,
-    ExitButton
+    ExitButton,
+    ProgressBar
 }
 public class MenuUIElement : MonoBehaviour
 {
@@ -17,7 +18,10 @@ public class MenuUIElement : MonoBehaviour
     [SerializeField] private MenuUIElementType _menuUIElementType;
     private void Awake()
     {
-        _button.onClick.AddListener(OnButtonClicked);
+        if(_button != null)
+        {
+            _button.onClick.AddListener(OnButtonClicked);
+        }
     }
 
     private void OnButtonClicked()

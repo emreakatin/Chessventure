@@ -12,11 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c53eed14ca841f29594c9190935bcf, type: 3}
   m_Name: Pawn
   m_EditorClassIdentifier: 
-  movementSpeed: 3
+  pieceType: 0
+  requiredKillsToLevelUp: 3
+  movementSpeed: 1.5
   rotationSpeed: 7
   jumpHeight: 1
   gravity: -20
   maxJumpCount: 1
-  maxHealth: 100
+  maxHealth: 10
   attackPower: 10
   defense: 5
+  attackRange: 2
+  attackSpeed: 1
+  attackCooldown: 1
+  areaAttackRange: 5
+  attackChance: 100
+  canUseShield: 0
+  canTeleport: 0
+  specialAttackRange: 0

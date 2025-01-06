@@ -1137,7 +1137,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1b1c83540991147f984258f056d53b76, type: 2}
+  - {fileID: 2100000, guid: 7a569e37feca50743b8d91fc11dc888d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1551,7 +1551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterData: {fileID: 11400000, guid: cb96ad990aece473bbdad76ba23dddd7, type: 2}
   animator: {fileID: 2975837452032619928}
-  spawnOffset: {x: 0, y: 0.1, z: 0}
+  spawnOffset: {x: 0, y: -0.5, z: 0}
 --- !u!95 &2975837452032619928
 Animator:
   serializedVersion: 7

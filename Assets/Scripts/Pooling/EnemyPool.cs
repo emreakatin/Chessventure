@@ -15,6 +15,7 @@ public class EnemyPool : MonoBehaviour
         {
             GameObject enemy = Instantiate(enemyPrefab);
             enemy.SetActive(false);
+            enemy.transform.parent = transform;
             pool.Add(enemy);
         }
     }

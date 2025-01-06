@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pawn
   m_EditorClassIdentifier: 
   pieceType: 0
-  requiredKillsToLevelUp: 3
+  requiredKillsToLevelUp: 5
   movementSpeed: 2
   rotationSpeed: 10
   jumpHeight: 1
@@ -24,6 +24,9 @@ MonoBehaviour:
   defense: 5
   attackRange: 2
   attackSpeed: 1
+  attackCooldown: 0.5
+  areaAttackRange: 2
+  attackChance: 100
   canUseShield: 0
   canTeleport: 0
   specialAttackRange: 0
