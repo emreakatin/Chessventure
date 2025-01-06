@@ -22,6 +22,8 @@ public class HealthSystem : MonoBehaviour, IHealthSystem
         currentHealth = MaxHealth;
     }
 
+    
+
     public void TakeDamage(float damage)
     {
         //if (IsDead) return;

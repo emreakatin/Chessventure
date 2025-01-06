@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1294497292468017157, guid: 9feeeaff4899a754b8c48ff4cf14f264, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5413036519898647653, guid: 9feeeaff4899a754b8c48ff4cf14f264, type: 3}
       propertyPath: m_Name
       value: ChessLevel

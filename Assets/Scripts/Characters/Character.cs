@@ -16,7 +16,8 @@ public abstract class Character : MonoBehaviour
 
     protected ChessPieceType CurrentPieceType => characterData?.pieceType ?? ChessPieceType.Pawn;
 
-    public CharacterData CharacterData => characterData; 
+    public CharacterData CharacterData => characterData;
+    public HealthSystem HealthSystem => healthSystem as HealthSystem; 
     protected virtual void Awake()
     {
         movementController = GetComponent<IMoveable>();

@@ -23,6 +23,7 @@ public class ProgressBarUI : MonoBehaviour
          player._onLevelUp.onRaise.RemoveListener(PlayerLevelUp);
     }
 
+
     private void Update()
     {
         // Update progress bar based on defeated enemies

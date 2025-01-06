@@ -6351,6 +6351,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaseLevel
       objectReference: {fileID: 0}
+    - target: {fileID: 2202070951521933719, guid: d319d42e307e849b9aa9fe5da9e1722d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3189999864636637658, guid: d319d42e307e849b9aa9fe5da9e1722d, type: 3}
       propertyPath: 'spawnAreas.Array.data[0]'
       value: 
