@@ -136,6 +136,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4939006217120472418, guid: f7ac80bd2d9344c269f7d38b8e9fe2d2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8559473879672622875, guid: f7ac80bd2d9344c269f7d38b8e9fe2d2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.68
@@ -201,6 +205,18 @@ PrefabInstance:
     - target: {fileID: 5413036519898647653, guid: 9feeeaff4899a754b8c48ff4cf14f264, type: 3}
       propertyPath: m_Name
       value: ChessLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6140596525280382276, guid: 9feeeaff4899a754b8c48ff4cf14f264, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 15.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 6140596525280382276, guid: 9feeeaff4899a754b8c48ff4cf14f264, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9716633
+      objectReference: {fileID: 0}
+    - target: {fileID: 6140596525280382276, guid: 9feeeaff4899a754b8c48ff4cf14f264, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.23636937
       objectReference: {fileID: 0}
     - target: {fileID: 7283551999325681341, guid: 9feeeaff4899a754b8c48ff4cf14f264, type: 3}
       propertyPath: m_LocalPosition.x

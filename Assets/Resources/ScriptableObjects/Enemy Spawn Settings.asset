@@ -16,6 +16,12 @@ MonoBehaviour:
   spawnDistance: 20
   enemyTypes:
   - pieceType: 0
-    spawnChance: 90
+    spawnChance: 100
   - pieceType: 1
-    spawnChance: 10
+    spawnChance: 100
+  - pieceType: 2
+    spawnChance: 100
+  - pieceType: 3
+    spawnChance: 100
+  - pieceType: 4
+    spawnChance: 100

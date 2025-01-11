@@ -1,7 +1,7 @@
 using UnityEngine;
 using ThirteenPixels.Soda;
 using UnityEngine.UI;
-
+using DG.Tweening;
 public enum MenuUIElementType
 {
     LevelStartButton,
@@ -12,10 +12,12 @@ public class MenuUIElement : MonoBehaviour
 {
     [SerializeField] private Button _button;
     [SerializeField] private GameEvent _onLevelStartRequest;
+    [SerializeField] private GameEvent _onGameLevelLoadRequest;
     [SerializeField] private GameEvent _onLevelCompleteRequest;
     [SerializeField] private GameEvent _onExitRequest;
     [SerializeField] private MenuUIElementType _menuUIElementType;
-
+    private float _moveDuration = 1f;
+ private float m_defaultPosition;
     public GameEvent _onPlayerDied;
 
 
@@ -24,6 +26,13 @@ public class MenuUIElement : MonoBehaviour
         if(_button != null)
         {
             _button.onClick.AddListener(OnButtonClicked);
+        }
+        
+         m_defaultPosition = GetComponent<RectTransform>().rect.height;   
+        if(_menuUIElementType == MenuUIElementType.RetryButton)
+        {
+           
+            GetInactive(  );
         }
     }
 
@@ -45,7 +54,7 @@ public class MenuUIElement : MonoBehaviour
 
     private void OnPlayerDied()
     {
-        UIActivation(true);
+        GetActive();
     }
 
     private void OnButtonClicked()
@@ -53,7 +62,7 @@ public class MenuUIElement : MonoBehaviour
         if(_menuUIElementType == MenuUIElementType.LevelStartButton) 
         {
             _onLevelStartRequest.Raise();
-            UIActivation(false);
+            GetInactive();
         }
         else if(_menuUIElementType == MenuUIElementType.LevelCompleteButton)
         {
@@ -62,15 +71,30 @@ public class MenuUIElement : MonoBehaviour
         else if(_menuUIElementType == MenuUIElementType.RetryButton)
         {
             //_onRetryRequest.Raise();
-            UIActivation(false);
+            GetInactive();
         }
 
     }
 
-    public void UIActivation(bool isActive)
-    {
-        Debug.Log("UIActivation: " + isActive);
-        //transform.domove
-        gameObject.SetActive(isActive);
-    }
+
+
+     private void GetActive()
+        {
+        
+            Tween t = GetComponent<RectTransform>().DOMoveY(0, _moveDuration).OnComplete(() => Invoke("EnableButton", 1f));
+            t.Play();
+        }
+
+        private void EnableButton()
+        {
+            _button.enabled = true;
+        }
+
+        private void GetInactive()
+        {
+             _button.enabled = false;
+            Tween t = GetComponent<RectTransform>().DOMoveY(m_defaultPosition * 2f, _moveDuration);
+            t.SetLink(gameObject);
+            t.Play();
+        }
 }

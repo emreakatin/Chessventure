@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pieceType: 0
   requiredKillsToLevelUp: 3
-  movementSpeed: 1.5
-  rotationSpeed: 7
+  movementSpeed: 2
+  rotationSpeed: 10
   jumpHeight: 1
   gravity: -20
   maxJumpCount: 1
   maxHealth: 10
   attackPower: 10
   defense: 5
-  attackRange: 2
+  attackRange: 1
   attackSpeed: 1
   attackCooldown: 1
-  areaAttackRange: 5
+  areaAttackRange: 2
   attackChance: 100
   canUseShield: 0
   canTeleport: 0

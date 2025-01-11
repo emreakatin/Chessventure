@@ -159,6 +159,8 @@ public class Player : Character
         InitializePlayer();
     }
 
+    private IHealthSystem targetHealthSystem;
+
     private void TryAttack()
     {
         if (Time.time >= lastAttackTime + characterData.attackCooldown)
@@ -171,7 +173,7 @@ public class Player : Character
             Invoke("ResetAttack", characterData.attackCooldown);
 
             // Sadece düşman katmanını kontrol et
-            int enemyLayerMask = LayerMask.GetMask("Enemy"); // "Enemy" adında bir katman oluşturmalısın
+            int enemyLayerMask = LayerMask.GetMask("Enemy");
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, characterData.attackRange, enemyLayerMask);
 
             Collider closestEnemy = null;
@@ -179,11 +181,9 @@ public class Player : Character
 
             foreach (var hitCollider in hitColliders)
             {
-                
-                IHealthSystem healthSystem = hitCollider.GetComponent<IHealthSystem>();
+                IHealthSystem opponentHealthSystem = hitCollider.GetComponent<IHealthSystem>();
                 if (healthSystem != null)
                 {
-                   
                     float distanceToEnemy = Vector3.Distance(transform.position, hitCollider.transform.position);
                     if (distanceToEnemy < closestDistance)
                     {
@@ -196,23 +196,24 @@ public class Player : Character
             if (closestEnemy != null)
             {
                 Debug.Log("Hit: " + closestEnemy.name);
-                IHealthSystem healthSystem = closestEnemy.GetComponent<IHealthSystem>();
-        
+                targetHealthSystem = closestEnemy.GetComponent<IHealthSystem>();
+    
                 // Düşmana hasar ver
-                if (!healthSystem.IsDead)
+                if (!targetHealthSystem.IsDead)
                 {
-                    float damage = characterData.attackPower;
-                    healthSystem.TakeDamage(damage);
+                    Invoke("GiveDelayedDamage", 0.5f);
                 }
-               
             }
         }
-
-
-
     }
 
-    
+    private void GiveDelayedDamage()
+    {
+        if (targetHealthSystem != null && !targetHealthSystem.IsDead)
+        {
+            targetHealthSystem.TakeDamage(characterData.attackPower);
+        }
+    }
     private void ResetAttack()
     {
         isAttacking = false;

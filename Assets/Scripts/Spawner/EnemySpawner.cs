@@ -4,6 +4,7 @@ using ThirteenPixels.Soda;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private EnemySpawnSettings spawnSettings; // Spawn ayarları
+    [SerializeField] private GameEvent _onLevelLoad;
     [SerializeField] private GameEvent _onGameLevelStartRequest;
     [SerializeField] private GameEvent _onEnemyDied;
     [SerializeField] private Player player; // Player referansı
@@ -41,7 +42,7 @@ public class EnemySpawner : MonoBehaviour
         {
             if (enemyType.pieceType <= playerPieceType && Random.value < enemyType.spawnChance)
             {
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 20; i++)
                 {
                     SpawnEnemyInRandomArea(enemyType.pieceType);
                 }

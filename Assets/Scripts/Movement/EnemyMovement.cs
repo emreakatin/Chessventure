@@ -6,11 +6,28 @@ using ThirteenPixels.Soda;
 public class EnemyMovement : CharacterMovement
 {
     private NavMeshAgent navMeshAgent;
+
     private Transform playerTransform;
+
     private Vector3 patrolStartPoint;
-    private Vector3 patrolDirection;
-    
-    [SerializeField] private float patrolDistance = 5f; // Nöbet mesafesi
+
+    private Vector3 currentPatrolTarget;
+
+    private bool isWaitingAtPatrolPoint = false;
+
+    private float waitStartTime;
+
+    private bool isMovingRight = true; // Sağa mı sola mı hareket ediyor
+
+    private float patrolDistance = 5f; // Nöbet mesafesi
+    private float waitTimeAtPatrolPoint = .5f; // Her noktada bekleme süresi
+    private float minPatrolDistance = 3f; // Minimum devriye mesafesi
+    private float animationSpeedThreshold = 0.1f; // Animasyon geçiş eşiği
+
+
+
+
+
 
     public NavMeshAgent NavMeshAgent => navMeshAgent;
 
@@ -24,18 +41,46 @@ public class EnemyMovement : CharacterMovement
     {
         playerTransform = FindObjectOfType<Player>().transform;
         patrolStartPoint = transform.position;
-        patrolDirection = Random.value > 0.5f ? Vector3.right : Vector3.left;
+        isMovingRight = Random.value > 0.5f;
+        SetNewPatrolTarget();
+    }
+
+    private void SetNewPatrolTarget()
+    {
+        // Sağa veya sola hareket yönünü belirle
+        Vector3 direction = isMovingRight ? Vector3.right : Vector3.left;
+        currentPatrolTarget = patrolStartPoint + direction * patrolDistance;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(currentPatrolTarget, out hit, patrolDistance, NavMesh.AllAreas))
+        {
+            currentPatrolTarget = hit.position;
+        }
     }
 
     public void Patrol()
     {
-        if (Vector3.Distance(transform.position, patrolStartPoint + patrolDirection * patrolDistance) < 0.1f)
+        if (isWaitingAtPatrolPoint)
         {
-            patrolDirection = -patrolDirection;
+            if (Time.time - waitStartTime >= waitTimeAtPatrolPoint)
+            {
+                isWaitingAtPatrolPoint = false;
+                isMovingRight = !isMovingRight; // Yönü değiştir
+                SetNewPatrolTarget();
+            }
+            navMeshAgent.isStopped = true;
+            return;
         }
 
-        Vector3 targetPosition = patrolStartPoint + patrolDirection * patrolDistance;
-        navMeshAgent.SetDestination(targetPosition);
+        navMeshAgent.isStopped = false;
+        if (Vector3.Distance(transform.position, currentPatrolTarget) < 2f)
+        {
+            isWaitingAtPatrolPoint = true;
+            waitStartTime = Time.time;
+            return;
+        }
+
+        navMeshAgent.SetDestination(currentPatrolTarget);
         navMeshAgent.speed = currentMovementSpeed;
     }
 
@@ -67,11 +112,11 @@ public class EnemyMovement : CharacterMovement
 
     public override bool IsMoving()
     {
-        return navMeshAgent.velocity.magnitude > 0.1f;
+        return navMeshAgent.velocity.magnitude > 0.1f && navMeshAgent.remainingDistance > 0.1f;
     }
 
     public override bool IsRunning()
     {
-        return navMeshAgent.velocity.magnitude > currentMovementSpeed;
+        return navMeshAgent.velocity.magnitude > currentMovementSpeed * 0.8f && navMeshAgent.remainingDistance > 0.1f;
     }
 } 

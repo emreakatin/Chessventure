@@ -13,6 +13,7 @@ namespace GameCore.Managers
         [SerializeField] private GameEvent _onGameLevelLoadRequest;
         [SerializeField] private GameEvent _onGameLevelStartRequest;
         [SerializeField] private GameEvent _onGameLevelCompleteRequest;
+        [SerializeField] private GameEvent _onGameStateChanged;
 
         [Header("References")]
         [SerializeField] private GameObject _mainMenuPrefab;
@@ -20,10 +21,18 @@ namespace GameCore.Managers
         [SerializeField] private GameObject[] _metaLevels;
 
         private GameObject m_currentLevel;
-        private Player player;
 
         private bool gameStarted = false;
-        public bool GameStarted { get { return gameStarted; } set { gameStarted = value; } }
+        public bool GameStarted 
+        { 
+            get { return gameStarted; } 
+            set 
+            { 
+                gameStarted = value;
+                if (_onGameStateChanged != null)
+                    _onGameStateChanged.Raise();
+            } 
+        }
 
         public static int LevelIndex
         {

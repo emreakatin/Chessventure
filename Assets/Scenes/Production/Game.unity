@@ -280,6 +280,7 @@ MonoBehaviour:
   _onGameLevelLoadRequest: {fileID: 11400000, guid: 33144323977de79439a54a9d8de59943, type: 2}
   _onGameLevelStartRequest: {fileID: 11400000, guid: dc7774d7195904d598a9996d2cdfdd61, type: 2}
   _onGameLevelCompleteRequest: {fileID: 0}
+  _onGameStateChanged: {fileID: 11400000, guid: 77887140f489f8f4fb31484c1abc6403, type: 2}
   _mainMenuPrefab: {fileID: 0}
   _gameLevels:
   - {fileID: 5413036519898647653, guid: 9feeeaff4899a754b8c48ff4cf14f264, type: 3}
