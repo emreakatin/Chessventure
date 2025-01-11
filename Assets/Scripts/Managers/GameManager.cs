@@ -22,6 +22,9 @@ namespace GameCore.Managers
         private GameObject m_currentLevel;
         private Player player;
 
+        private bool gameStarted = false;
+        public bool GameStarted { get { return gameStarted; } set { gameStarted = value; } }
+
         public static int LevelIndex
         {
             get

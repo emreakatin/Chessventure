@@ -11,6 +11,7 @@ public class Player : Character
 
      public GameEvent _onLevelUp;
      public GameEvent _onEnemyDied;
+     public GameEvent _onPlayerDied;
 
     protected override void Awake()
     {
@@ -81,7 +82,7 @@ public class Player : Character
             killCount = 0;
             SavePlayerLevel(); // Level atladığında kaydet
             
-            Invoke("OnLevelUp",1);
+            Invoke("OnLevelUp",1.5f);
             //OnLevelUp();
         }
     }
@@ -114,7 +115,9 @@ public class Player : Character
     public override void OnDied()
     {
         base.OnDied();
-        //_onPlayerDied();
+        animator.SetTrigger("Dead");
+        //Destroy(gameObject, 2);
+        _onPlayerDied.Raise();
     }
 
     protected override string GetPiecePrefabPath(ChessPieceType pieceType)
@@ -140,7 +143,7 @@ public class Player : Character
         }
 
         // Saldırı girişi
-        if (Input.GetButtonDown("Fire1") && !isAttacking)
+        if (Input.GetButtonDown("Fire1") && !isAttacking && !healthSystem.IsDead)
         {
             TryAttack();
         }

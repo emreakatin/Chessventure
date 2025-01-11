@@ -84,6 +84,7 @@ MonoBehaviour:
   pieceHolder: {fileID: 6456438597727659024}
   animator: {fileID: 0}
   _onEnemyDied: {fileID: 11400000, guid: 5c188a16fa6bd403e863916c776aac5d, type: 2}
+  detectionRange: 10
 --- !u!114 &806395837139731735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f06972733374c3c8c9c496aa54c0dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patrolDistance: 5
 --- !u!195 &2597981258911538206
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -105,11 +107,11 @@ NavMeshAgent:
   m_GameObject: {fileID: 2103850695425968969}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.28
+  m_Radius: 0.62
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 200
   m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

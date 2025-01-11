@@ -4,18 +4,97 @@ using ThirteenPixels.Soda;
 public class Enemy : Character
 {
     [SerializeField] private GameEvent _onEnemyDied;
-    private float lastAttackTime = 0f; // Son saldırı zamanı
+    private float lastAttackTime = 0f;
     private Player player;
+    private EnemyMovement enemyMovement;
+
+    [SerializeField] private float detectionRange = 5f; // Oyuncuyu farketme mesafesi
+
     protected override void Awake()
     {
         base.Awake();
-        //healthSystem.onDied.AddListener(OnEnemyDied);
+        enemyMovement = movementController as EnemyMovement;
     }
 
     protected void Start()
     {
-        //(enemyMovement as EnemyMovement).OnEnemyAttack.AddListener(AttackPlayer);
         player = FindObjectOfType<Player>();
+        InitializeEnemyType(player.CharacterData.pieceType);
+    }
+
+    private void Update()
+    {
+        base.Update();
+
+        if (player == null || IsDead() ) return;
+
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+        
+        // Mesafeye göre davranış belirleme
+        if (distanceToPlayer > detectionRange)
+        {
+            // Oyuncu uzaktaysa patrol yap
+            enemyMovement.Patrol();
+        }
+        else if (distanceToPlayer > characterData.attackRange)
+        {
+            // Oyuncu detection range içindeyse ama attack range dışındaysa takip et
+            enemyMovement.ChasePlayer();
+            movementController.Rotate(directionToPlayer); // Oyuncuya dön
+        }
+        else
+        {
+            // Attack range içindeyse dur ve saldır
+            enemyMovement.StopMoving();
+            movementController.Rotate(directionToPlayer); // Oyuncuya dön
+
+            if(!player.HealthSystem.IsDead){
+                AttackPlayer();
+            }
+            
+        }
+    }
+
+    private void AttackPlayer()
+    {
+        if (CanAttackPlayer())
+        {
+            TryAttack();
+        }
+    }
+
+       
+    private void TryAttack()
+    {
+        if (Time.time >= lastAttackTime + characterData.attackCooldown)
+        {
+            lastAttackTime = Time.time;
+            animator.SetTrigger("Attack");
+
+            IHealthSystem healthSystem = player.GetComponent<IHealthSystem>();
+            if (healthSystem != null && !healthSystem.IsDead)
+            {
+                float damage = characterData.attackPower;
+                healthSystem.TakeDamage(damage);
+                Debug.Log($"Enemy attacked player for {damage} damage!");
+            }
+        }
+    }
+
+    public void InitializeEnemyType(ChessPieceType playerPieceType)
+    {
+        // Player'ın seviyesine göre random bir düşman tipi seç
+        ChessPieceType enemyType = GetRandomEnemyType(playerPieceType);
+        ChangePiece(enemyType);
+    }
+
+    private ChessPieceType GetRandomEnemyType(ChessPieceType playerPieceType)
+    {
+        // Player'ın seviyesinden düşük veya eşit bir seviye seç
+        int maxLevel = (int)playerPieceType;
+        int randomLevel = Random.Range(0, maxLevel + 1);
+        return (ChessPieceType)randomLevel;
     }
 
     protected override void OnPieceChanged()
@@ -43,43 +122,14 @@ public class Enemy : Character
         return string.Format(ResourceDirectories.ENEMY_PIECES_PATH, pieceType.ToString());
     }
     
-    private void Update()
-    {
-        base.Update();
-
-        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-        
-        if (distanceToPlayer > characterData.attackRange)
-        {
-            if ((movementController as EnemyMovement).IsPatrolling)
-            {
-                //(movementController as EnemyMovement).Patrol(); // Nöbet tutma hareketi
-            }
-        }
-        else if (distanceToPlayer <= characterData.attackRange && distanceToPlayer > characterData.attackRange / 2)
-        {
-           (movementController as EnemyMovement).ChasePlayer(); // Oyuncuya koşma
-        }
-        else
-        {
-            //_onEnemyAttack.Raise();
-            AttackPlayer(); // Oyuncuya saldırma
-        }
-    }
-    private void AttackPlayer()
-    {
-        if (CanAttackPlayer())
-        {
-            // Saldırı yapma kodu
-            //TryAttack(); // Düşmanın saldırı fonksiyonu
-        }
-    }
-
     public override void OnDied()
     {
         if (IsDead())
         {
             base.OnDied();
+            animator.SetTrigger("Dead");
+            Destroy(gameObject, 2);
+    
             _onEnemyDied.Raise();
         }
       
@@ -98,26 +148,7 @@ public class Enemy : Character
         return false; // Saldırı yapamaz
     }  
 
-    private void TryAttack()
-    {
-        if (Time.time >= lastAttackTime + characterData.attackCooldown)
-        {
-            lastAttackTime = Time.time;
-
-            Player player = FindObjectOfType<Player>();
-            if (player != null)
-            {
-                IHealthSystem healthSystem = player.GetComponent<IHealthSystem>();
-                if (healthSystem != null)
-                {
-                    float damage = characterData.attackPower;
-                    healthSystem.TakeDamage(damage);
-                }
-            }
-        }
-    }
-
-      private bool IsDead()
+    private bool IsDead()
     {
         // Öldü mü kontrolü
         return healthSystem.CurrentHealth <= 0;

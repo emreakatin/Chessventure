@@ -7,19 +7,25 @@ public class PlayerMovement : CharacterMovement
     private IInputHandler inputHandler;
     private Vector3 verticalVelocity;
     private int currentJumpCount;
+    private IHealthSystem healthSystem;
+
 
     protected override void Awake()
     {
         base.Awake();
         controller = GetComponent<CharacterController>();
         inputHandler = GetComponent<IInputHandler>();
+        healthSystem = GetComponent<IHealthSystem>();
     }
 
     private void Update()
     {
-        HandleMovement();
-        HandleGravity();
-        HandleJump();
+        if (!healthSystem.IsDead)
+        {
+            HandleMovement();
+            HandleGravity();
+            HandleJump();
+        }
     }
 
     private void HandleMovement()

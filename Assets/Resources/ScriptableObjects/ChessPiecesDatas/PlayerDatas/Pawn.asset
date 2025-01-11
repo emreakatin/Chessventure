@@ -19,7 +19,7 @@ MonoBehaviour:
   jumpHeight: 1
   gravity: -20
   maxJumpCount: 1
-  maxHealth: 100
+  maxHealth: 20
   attackPower: 10
   defense: 5
   attackRange: 2

@@ -100,8 +100,7 @@ public abstract class Character : MonoBehaviour
     }
 
     public virtual void OnDied(){
-        animator.SetTrigger("Dead");
-        Destroy(gameObject, 2);
+        
     }
 
     protected virtual void UpdateSystems()

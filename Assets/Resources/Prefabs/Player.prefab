@@ -82,8 +82,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pieceHolder: {fileID: 5476456230778404149}
   animator: {fileID: 0}
+  killCount: 0
   _onLevelUp: {fileID: 11400000, guid: 0dc2f347d98c37a4188e36141146a117, type: 2}
   _onEnemyDied: {fileID: 11400000, guid: 5c188a16fa6bd403e863916c776aac5d, type: 2}
+  _onPlayerDied: {fileID: 11400000, guid: 33df79ccbb07345448d65b17a9079ab8, type: 2}
 --- !u!114 &377781411302720057
 MonoBehaviour:
   m_ObjectHideFlags: 0

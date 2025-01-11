@@ -6,8 +6,7 @@ public enum MenuUIElementType
 {
     LevelStartButton,
     LevelCompleteButton,
-    ExitButton,
-    ProgressBar
+    RetryButton,
 }
 public class MenuUIElement : MonoBehaviour
 {
@@ -16,12 +15,37 @@ public class MenuUIElement : MonoBehaviour
     [SerializeField] private GameEvent _onLevelCompleteRequest;
     [SerializeField] private GameEvent _onExitRequest;
     [SerializeField] private MenuUIElementType _menuUIElementType;
+
+    public GameEvent _onPlayerDied;
+
+
     private void Awake()
     {
         if(_button != null)
         {
             _button.onClick.AddListener(OnButtonClicked);
         }
+    }
+
+    private void OnEnable()
+    {
+        if(_menuUIElementType == MenuUIElementType.RetryButton)
+        {
+            _onPlayerDied.onRaise.AddListener(OnPlayerDied);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if(_menuUIElementType == MenuUIElementType.RetryButton)
+        {
+            _onPlayerDied.onRaise.RemoveListener(OnPlayerDied);
+        }
+    }
+
+    private void OnPlayerDied()
+    {
+        UIActivation(true);
     }
 
     private void OnButtonClicked()
@@ -35,14 +59,18 @@ public class MenuUIElement : MonoBehaviour
         {
             _onLevelCompleteRequest.Raise();
         }
-        else if(_menuUIElementType == MenuUIElementType.ExitButton)
+        else if(_menuUIElementType == MenuUIElementType.RetryButton)
         {
-            _onExitRequest.Raise();
+            //_onRetryRequest.Raise();
+            UIActivation(false);
         }
+
     }
 
     public void UIActivation(bool isActive)
     {
+        Debug.Log("UIActivation: " + isActive);
+        //transform.domove
         gameObject.SetActive(isActive);
     }
 }
