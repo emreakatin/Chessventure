@@ -1044,6 +1044,8 @@ Transform:
   m_Children:
   - {fileID: 9163129255211640128}
   - {fileID: 3229130334869553896}
+  - {fileID: 6037919051350116261}
+  - {fileID: 6294485488128146423}
   m_Father: {fileID: 6294619973915250312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5777463355330625715
@@ -1562,10 +1564,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 6789846059815672352}
-  _onLevelStartRequest: {fileID: 11400000, guid: 220cde8228ae949929e7091e4a0c1e7d, type: 2}
+  _onLevelStartRequest: {fileID: 0}
   _onGameLevelLoadRequest: {fileID: 0}
   _onLevelCompleteRequest: {fileID: 0}
-  _onExitRequest: {fileID: 0}
+  _onRetryGameRequest: {fileID: 11400000, guid: 220cde8228ae949929e7091e4a0c1e7d, type: 2}
   _menuUIElementType: 2
   _onPlayerDied: {fileID: 11400000, guid: 33df79ccbb07345448d65b17a9079ab8, type: 2}
 --- !u!1 &7331357144066355185
@@ -1743,6 +1745,55 @@ MonoBehaviour:
   playerCam: {fileID: 3013684340234923504}
   _onGameLevelLoadRequest: {fileID: 11400000, guid: 33144323977de79439a54a9d8de59943, type: 2}
   _onGameLevelStartRequest: {fileID: 11400000, guid: dc7774d7195904d598a9996d2cdfdd61, type: 2}
+--- !u!1 &7954425326695244826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6294485488128146423}
+  - component: {fileID: 2613228081625012327}
+  m_Layer: 0
+  m_Name: ParticleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6294485488128146423
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7954425326695244826}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2466796321717629266}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2613228081625012327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7954425326695244826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0821d8478c96cbd4d9c3beb6c5a6c8e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelUpParticle: {fileID: 7726778278058189526, guid: fec549ee6c7e13c47b88aac87ea989fb, type: 3}
+  playerAttackParticle: {fileID: 198047375795165696, guid: bac6010fd61d72b419fb265a96000090, type: 3}
+  enemyAttackParticle: {fileID: 198792010525850640, guid: 58787be5d7d8ef54f916803a49d320d5, type: 3}
+  playerDeathParticle: {fileID: 19899072, guid: 75f06efdf4dffb64196a8a771986c0b8, type: 3}
+  healParticle: {fileID: 19803030, guid: 0e4a7fa9fd28f154b91c98ee6fe8ebea, type: 3}
 --- !u!1 &8015755509822398256
 GameObject:
   m_ObjectHideFlags: 0
@@ -1796,7 +1847,7 @@ MonoBehaviour:
   _onLevelStartRequest: {fileID: 11400000, guid: dc7774d7195904d598a9996d2cdfdd61, type: 2}
   _onGameLevelLoadRequest: {fileID: 0}
   _onLevelCompleteRequest: {fileID: 0}
-  _onExitRequest: {fileID: 0}
+  _onRetryGameRequest: {fileID: 0}
   _menuUIElementType: 0
   _onPlayerDied: {fileID: 0}
 --- !u!1 &8075645119670113346
@@ -1878,6 +1929,59 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
+--- !u!1 &8505374579239966149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6037919051350116261}
+  - component: {fileID: 3240683494411628391}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6037919051350116261
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8505374579239966149}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2466796321717629266}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3240683494411628391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8505374579239966149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78e225b29ac332d41832849f058680d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelUpSound: {fileID: 8300000, guid: d676aa383bd6840fcab7186b1ab140bc, type: 3}
+  playerAttackSound: {fileID: 8300000, guid: d7b2c74f601a34b50877a55c37a05366, type: 3}
+  playerDeathSound: {fileID: 8300000, guid: cc94eac23957c4914ab6bb69380da139, type: 3}
+  playerJumpSound: {fileID: 8300000, guid: d364afd3bbb434993a756854574297b3, type: 3}
+  levelCompleteSound: {fileID: 8300000, guid: 69309d6472b5041c897ba20931b1e051, type: 3}
+  themeMusic: {fileID: 8300000, guid: bbe8301f6a8bb41f3b0047d7c7031c6a, type: 3}
+  masterVolume: 1
+  sfxVolume: 1
+  musicVolume: 0.3
 --- !u!1 &8638116617760976128
 GameObject:
   m_ObjectHideFlags: 0
@@ -2188,11 +2292,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1789741037692043415, guid: 7a073c242c11a4959bbb9215f8513b7d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.540001
+      value: 11.33
       objectReference: {fileID: 0}
     - target: {fileID: 1789741037692043415, guid: 7a073c242c11a4959bbb9215f8513b7d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.8700001
+      value: -0.90999985
       objectReference: {fileID: 0}
     - target: {fileID: 1789741037692043415, guid: 7a073c242c11a4959bbb9215f8513b7d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2276,7 +2380,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  FollowOffset: {x: 0, y: 5.76, z: -3.89}
+  FollowOffset: {x: 0, y: 5.55, z: -5.67}
 --- !u!4 &6995377676206265088 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1789741037692043415, guid: 7a073c242c11a4959bbb9215f8513b7d, type: 3}

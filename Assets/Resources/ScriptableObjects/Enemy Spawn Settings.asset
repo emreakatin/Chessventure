@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 478bb62a1c46a4ef6a5f450f5252f89b, type: 3}
   m_Name: Enemy Spawn Settings
   m_EditorClassIdentifier: 
-  maxEnemies: 30
+  maxEnemies: 40
   spawnDistance: 20
   enemyTypes:
   - pieceType: 0

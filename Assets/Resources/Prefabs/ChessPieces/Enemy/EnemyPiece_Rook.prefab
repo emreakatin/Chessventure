@@ -1781,7 +1781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd09fe4994ad442d1aec11fa83944cf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterData: {fileID: 11400000, guid: bde138dbea43e49b593c3957bff038cf, type: 2}
+  characterData: {fileID: 11400000, guid: 8888794b1f90b4f048176df3e6f7df6f, type: 2}
   animator: {fileID: 0}
   spawnOffset: {x: 0, y: 0, z: 0}
 --- !u!95 &4548965611747747559

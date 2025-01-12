@@ -198,6 +198,108 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &258942795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 258942797}
+  - component: {fileID: 258942796}
+  m_Layer: 0
+  m_Name: ParticleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &258942796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258942795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0821d8478c96cbd4d9c3beb6c5a6c8e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelUpParticle: {fileID: 7726778278058189526, guid: fec549ee6c7e13c47b88aac87ea989fb, type: 3}
+  playerAttackParticle: {fileID: 198047375795165696, guid: bac6010fd61d72b419fb265a96000090, type: 3}
+  enemyAttackParticle: {fileID: 198792010525850640, guid: 58787be5d7d8ef54f916803a49d320d5, type: 3}
+  playerDeathParticle: {fileID: 19899072, guid: 75f06efdf4dffb64196a8a771986c0b8, type: 3}
+  healParticle: {fileID: 19803030, guid: 0e4a7fa9fd28f154b91c98ee6fe8ebea, type: 3}
+--- !u!4 &258942797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258942795}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &729820656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 729820658}
+  - component: {fileID: 729820657}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &729820657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729820656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78e225b29ac332d41832849f058680d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelUpSound: {fileID: 8300000, guid: d676aa383bd6840fcab7186b1ab140bc, type: 3}
+  playerAttackSound: {fileID: 8300000, guid: d7b2c74f601a34b50877a55c37a05366, type: 3}
+  playerDeathSound: {fileID: 8300000, guid: cc94eac23957c4914ab6bb69380da139, type: 3}
+  playerJumpSound: {fileID: 8300000, guid: d364afd3bbb434993a756854574297b3, type: 3}
+  levelCompleteSound: {fileID: 8300000, guid: 69309d6472b5041c897ba20931b1e051, type: 3}
+  themeMusic: {fileID: 8300000, guid: bbe8301f6a8bb41f3b0047d7c7031c6a, type: 3}
+  masterVolume: 1
+  sfxVolume: 1
+  musicVolume: 0.3
+--- !u!4 &729820658
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729820656}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &925789492
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +382,7 @@ MonoBehaviour:
   _onGameLevelLoadRequest: {fileID: 11400000, guid: 33144323977de79439a54a9d8de59943, type: 2}
   _onGameLevelStartRequest: {fileID: 11400000, guid: dc7774d7195904d598a9996d2cdfdd61, type: 2}
   _onGameLevelCompleteRequest: {fileID: 0}
+  _onRetryGameRequest: {fileID: 11400000, guid: 220cde8228ae949929e7091e4a0c1e7d, type: 2}
   _onGameStateChanged: {fileID: 11400000, guid: 77887140f489f8f4fb31484c1abc6403, type: 2}
   _mainMenuPrefab: {fileID: 0}
   _gameLevels:
@@ -308,3 +411,5 @@ SceneRoots:
   - {fileID: 1212288386}
   - {fileID: 925789494}
   - {fileID: 188065014}
+  - {fileID: 729820658}
+  - {fileID: 258942797}

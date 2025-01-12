@@ -26,7 +26,7 @@ MonoBehaviour:
   attackSpeed: 1
   attackCooldown: 1
   areaAttackRange: 2
-  attackChance: 100
+  attackChance: 70
   canUseShield: 0
   canTeleport: 0
   specialAttackRange: 0

@@ -8,11 +8,14 @@ namespace GameCore.Managers
     {
         private const string current_level_index_key = "LevelIndex";
 
+        public static GameManager Instance;
+
         [Title("Events")]
     
         [SerializeField] private GameEvent _onGameLevelLoadRequest;
         [SerializeField] private GameEvent _onGameLevelStartRequest;
         [SerializeField] private GameEvent _onGameLevelCompleteRequest;
+        [SerializeField] private GameEvent _onRetryGameRequest;
         [SerializeField] private GameEvent _onGameStateChanged;
 
         [Header("References")]
@@ -46,7 +49,15 @@ namespace GameCore.Managers
 
         private void Awake()
         {
-            DontDestroyOnLoad(this);
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(this);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
             Load();
             SpawnGameLevel();
             _onGameLevelLoadRequest.Raise();
@@ -71,11 +82,13 @@ namespace GameCore.Managers
         private void OnEnable()
         {
             _onGameLevelLoadRequest.onRaise.AddListener(SpawnGameLevel);
+            _onRetryGameRequest.onRaise.AddListener(SpawnGameLevel);
         }
 
         private void OnDisable()
         {
             _onGameLevelLoadRequest.onRaise.RemoveListener(SpawnGameLevel);
+            _onRetryGameRequest.onRaise.RemoveListener(SpawnGameLevel);
         }
         
         private void Load()

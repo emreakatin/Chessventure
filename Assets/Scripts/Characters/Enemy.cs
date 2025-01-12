@@ -22,7 +22,7 @@ public class Enemy : Character
 
         if(FindObjectOfType<GameManager>() == null)
         {
-            isGameStarted = true;
+           
         }
     }
 
@@ -36,7 +36,7 @@ public class Enemy : Character
               Debug.Log("Enemy Start");   
         }
       
-        
+         isGameStarted = true;
     }
 
     private void OnEnable()
@@ -84,18 +84,24 @@ public class Enemy : Character
         }
         else if (distanceToPlayer > characterData.attackRange)
         {
-            // Oyuncu detection range içindeyse ama attack range dışındaysa takip et
-            enemyMovement.ChasePlayer();
-            movementController.Rotate(directionToPlayer); // Oyuncuya dön
+            if(!player.HealthSystem.IsDead)
+            {
+                // Oyuncu detection range içindeyse ama attack range dışındaysa takip et
+                enemyMovement.ChasePlayer();
+                movementController.Rotate(directionToPlayer); // Oyuncuya dön
+            }
         }
         else
         {
-            // Attack range içindeyse dur ve saldır
-            enemyMovement.StopMoving();
-            movementController.Rotate(directionToPlayer); // Oyuncuya dön
-
+        
             if(!player.HealthSystem.IsDead){
                 AttackPlayer();
+                  // Attack range içindeyse dur ve saldır
+            enemyMovement.StopMoving();
+            movementController.Rotate(directionToPlayer); // Oyuncuya dön
+            }
+            else{
+                enemyMovement.Patrol();
             }
             
         }
@@ -122,6 +128,11 @@ public class Enemy : Character
             {
                 float damage = characterData.attackPower;
                 healthSystem.TakeDamage(damage);
+                
+                // Saldırı efekti
+                Vector3 direction = (player.transform.position - transform.position).normalized;
+                ParticleManager.Instance.PlayEnemyAttackEffect(player.transform.position + Vector3.up * 1.2f, direction);
+                
                 Debug.Log($"Enemy attacked player for {damage} damage!");
             }
         }

@@ -2,6 +2,8 @@ using UnityEngine;
 using ThirteenPixels.Soda;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
+using GameCore.Managers;
 public enum MenuUIElementType
 {
     LevelStartButton,
@@ -14,7 +16,7 @@ public class MenuUIElement : MonoBehaviour
     [SerializeField] private GameEvent _onLevelStartRequest;
     [SerializeField] private GameEvent _onGameLevelLoadRequest;
     [SerializeField] private GameEvent _onLevelCompleteRequest;
-    [SerializeField] private GameEvent _onExitRequest;
+    [SerializeField] private GameEvent _onRetryGameRequest;
     [SerializeField] private MenuUIElementType _menuUIElementType;
     private float _moveDuration = 1f;
  private float m_defaultPosition;
@@ -70,8 +72,14 @@ public class MenuUIElement : MonoBehaviour
         }
         else if(_menuUIElementType == MenuUIElementType.RetryButton)
         {
-            //_onRetryRequest.Raise();
-            GetInactive();
+            if(FindObjectOfType<GameManager>() != null)
+            {
+                _onRetryGameRequest.Raise();
+            }
+            else{
+                SceneManager.LoadScene(0);
+            }
+            //GetInactive();
         }
 
     }

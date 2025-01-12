@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21c53eed14ca841f29594c9190935bcf, type: 3}
-  m_Name: King
+  m_Name: PlayerBishop
   m_EditorClassIdentifier: 
-  pieceType: 5
-  requiredKillsToLevelUp: 3
-  movementSpeed: 3
+  pieceType: 2
+  requiredKillsToLevelUp: 30
+  movementSpeed: 5
   rotationSpeed: 7
   jumpHeight: 1
   gravity: -20
   maxJumpCount: 1
-  maxHealth: 2000
-  attackPower: 100
+  maxHealth: 300
+  attackPower: 50
   defense: 5
   attackRange: 2
-  attackSpeed: 0.5
-  attackCooldown: 0.5
+  attackSpeed: 1
+  attackCooldown: 0.3
   areaAttackRange: 2
   attackChance: 100
   canUseShield: 0

@@ -70,6 +70,7 @@ public class PlayerMovement : CharacterMovement
         float gravity = character.CharacterData.gravity;
         verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         currentJumpCount++;
+        SoundManager.Instance.PlayPlayerJumpSound();
     }
 
     public override void Move(Vector3 direction)

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21c53eed14ca841f29594c9190935bcf, type: 3}
-  m_Name: Knight
+  m_Name: PlayerKnight
   m_EditorClassIdentifier: 
   pieceType: 1
-  requiredKillsToLevelUp: 3
-  movementSpeed: 3
-  rotationSpeed: 7
+  requiredKillsToLevelUp: 20
+  movementSpeed: 4
+  rotationSpeed: 10
   jumpHeight: 1.5
   gravity: -30
   maxJumpCount: 2
-  maxHealth: 100
-  attackPower: 10
-  defense: 5
+  maxHealth: 200
+  attackPower: 20
+  defense: 7
   attackRange: 2
   attackSpeed: 1
   attackCooldown: 0.5

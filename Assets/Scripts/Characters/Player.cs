@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using ThirteenPixels.Soda;
+using DG.Tweening;
 public class Player : Character
 {
     private const string PLAYER_LEVEL_KEY = "PlayerLevel";
@@ -12,6 +13,11 @@ public class Player : Character
      public GameEvent _onLevelUp;
      public GameEvent _onEnemyDied;
      public GameEvent _onPlayerDied;
+
+    [Header("Healing Settings")]
+    [SerializeField] private float healAmount = 0.3f; // Canın %30'u kadar iyileştirme
+    [SerializeField] private float healCooldown = 5f; // İyileştirme bekleme süresi
+    private float lastHealTime = 0f;
 
     protected override void Awake()
     {
@@ -74,9 +80,13 @@ public class Player : Character
 
     private void LevelUp()
     {
-        currentLevel++;
-        ChessPieceType nextPieceType = (ChessPieceType)currentLevel;
-        
+        pieceHolder.transform.DOScale(0f, 0.2f).SetEase(Ease.InOutSine).OnComplete(() =>
+        {
+            ParticleManager.Instance.PlayLevelUpEffect(transform.position + Vector3.up * .2f);
+             SoundManager.Instance.PlayLevelUpSound();
+            currentLevel++;
+            ChessPieceType nextPieceType = (ChessPieceType)currentLevel;
+            
         if (System.Enum.IsDefined(typeof(ChessPieceType), nextPieceType))
         {
             ChangePiece(nextPieceType);
@@ -86,6 +96,8 @@ public class Player : Character
             Invoke("OnLevelUp",1.5f);
             //OnLevelUp();
         }
+        pieceHolder.transform.DOScale(1f, 0.2f).SetEase(Ease.InOutSine);
+        });
     }
 
     protected override void OnPieceChanged()
@@ -111,14 +123,17 @@ public class Player : Character
     {
         Debug.Log($"Leveled up to {CurrentPieceType}!");
         _onLevelUp.Raise();
+       
+        
     }
 
     public override void OnDied()
     {
         base.OnDied();
         animator.SetTrigger("Dead");
-        //Destroy(gameObject, 2);
         _onPlayerDied.Raise();
+        SoundManager.Instance.PlayPlayerDeathSound();
+        ParticleManager.Instance.PlayPlayerDeathEffect(transform.position + Vector3.up * .2f);
     }
 
     protected override string GetPiecePrefabPath(ChessPieceType pieceType)
@@ -129,6 +144,14 @@ public class Player : Character
     private void Update()
     {
         base.Update();
+
+        // Düşme kontrolü
+        if (transform.position.y < -20f && !healthSystem.IsDead)
+        {
+            healthSystem.TakeDamage(characterData.maxHealth); // Direkt öldür
+            Debug.Log("Player fell off the map!");
+        }
+
         // Test için level atlama
         if (Input.GetKeyDown(KeyCode.T))
         {
@@ -147,6 +170,12 @@ public class Player : Character
         if (Input.GetButtonDown("Fire1") && !isAttacking && !healthSystem.IsDead)
         {
             TryAttack();
+        }
+
+        // Can yenileme
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            TryHeal();
         }
     }
 
@@ -170,6 +199,7 @@ public class Player : Character
             lastAttackTime = Time.time;
             isAttacking = true;
             animator.SetTrigger("Attack");
+           
 
             Invoke("ResetAttack", characterData.attackCooldown);
 
@@ -202,7 +232,12 @@ public class Player : Character
                 // Düşmana hasar ver
                 if (!targetHealthSystem.IsDead)
                 {
-                    Invoke("GiveDelayedDamage", 0.5f);
+                    if(targetHealthSystem != null)
+                    {
+                     SoundManager.Instance.PlayPlayerAttackSound();
+                    ParticleManager.Instance.PlayPlayerAttackEffect(transform.position + Vector3.up * 1.2f ,transform.position);
+                    Invoke("GiveDelayedDamage", 0.5f);  
+                    }
                 }
             }
         }
@@ -212,11 +247,37 @@ public class Player : Character
     {
         if (targetHealthSystem != null && !targetHealthSystem.IsDead)
         {
-            targetHealthSystem.TakeDamage(characterData.attackPower);
+             targetHealthSystem.TakeDamage(characterData.attackPower);
+            
+            
+           
+            
         }
     }
     private void ResetAttack()
     {
         isAttacking = false;
+    }
+
+    private void TryHeal()
+    {
+        if (Time.time >= lastHealTime + healCooldown && !healthSystem.IsDead)
+        {
+            float healValue = characterData.maxHealth * healAmount;
+            float currentHealth = healthSystem.CurrentHealth;
+            float maxHealth = characterData.maxHealth;
+
+            if (currentHealth < maxHealth)
+            {
+                lastHealTime = Time.time;
+                healthSystem.Heal(healValue);
+                
+                // Efekt ve ses ekle
+                ParticleManager.Instance.PlayHealEffect(transform.position + Vector3.up);
+                //SoundManager.Instance.PlayHealSound();
+                
+                Debug.Log($"Healed for {healValue} health!");
+            }
+        }
     }
 } 

@@ -36,7 +36,10 @@ public class HealthSystem : MonoBehaviour, IHealthSystem
 
         if (IsDead)
         {
-            onDied?.Invoke();
+            if(gameObject != null)
+            {
+                onDied?.Invoke();
+            }
         }
     }
 
@@ -44,10 +47,7 @@ public class HealthSystem : MonoBehaviour, IHealthSystem
     {
         if (IsDead) return;
 
-        float actualHeal = Mathf.Min(MaxHealth - currentHealth, amount);
-        currentHealth = Mathf.Min(MaxHealth, currentHealth + actualHeal);
-
-        onHealed?.Invoke(actualHeal);
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         onHealthChanged?.Invoke(currentHealth);
     }
 

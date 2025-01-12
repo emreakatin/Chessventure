@@ -931,7 +931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd09fe4994ad442d1aec11fa83944cf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterData: {fileID: 11400000, guid: 007b61de2959d4f21945306f1b7812ef, type: 2}
+  characterData: {fileID: 11400000, guid: 7fe61d6e6f0e84deaa0a349749b89911, type: 2}
   animator: {fileID: 2072086287644068641}
   spawnOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &5587708440691800137

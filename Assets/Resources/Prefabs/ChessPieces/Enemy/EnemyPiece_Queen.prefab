@@ -939,7 +939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd09fe4994ad442d1aec11fa83944cf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterData: {fileID: 11400000, guid: 87f2e2f76da174882928dade2f767ea8, type: 2}
+  characterData: {fileID: 11400000, guid: eb9c42d7b5c4c4e34a8d2ce824b38628, type: 2}
   animator: {fileID: 4692427564679955187}
   spawnOffset: {x: 0, y: 0, z: 0}
 --- !u!95 &4692427564679955187

@@ -48,7 +48,7 @@ public class EnemySpawner : MonoBehaviour
         {
             if ((int)enemyType.pieceType <= (int)playerPieceType && Random.value < enemyType.spawnChance)
             {
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 30; i++)
                 {
                     SpawnEnemyInRandomArea(enemyType.pieceType);
                 }
@@ -82,18 +82,82 @@ public class EnemySpawner : MonoBehaviour
 
     private Vector3 GetRandomPositionInArea(Transform area)
     {
-        // Spawn alanı içindeki rastgele bir pozisyon hesapla
-        Vector3 randomPoint = new Vector3(
-            Random.Range(area.position.x - area.localScale.x / 2, area.position.x + area.localScale.x / 2),
-            area.position.y, 
-            Random.Range(area.position.z - area.localScale.z / 2, area.position.z + area.localScale.z / 2)
-        );
+        // Spawn alanının boyutlarını al
+        float areaWidth = area.localScale.x;
+        float areaLength = area.localScale.z;
+        
+        // Kenarlardan birini rastgele seç (0: Sol, 1: Sağ, 2: Üst, 3: Alt)
+        int edge = Random.Range(0, 4);
+        Vector3 randomPoint;
+
+        switch (edge)
+        {
+            case 0: // Sol kenar
+                randomPoint = new Vector3(
+                    area.position.x - areaWidth/2,
+                    area.position.y,
+                    Random.Range(area.position.z - areaLength/2, area.position.z + areaLength/2)
+                );
+                break;
+            case 1: // Sağ kenar
+                randomPoint = new Vector3(
+                    area.position.x + areaWidth/2,
+                    area.position.y,
+                    Random.Range(area.position.z - areaLength/2, area.position.z + areaLength/2)
+                );
+                break;
+            case 2: // Üst kenar
+                randomPoint = new Vector3(
+                    Random.Range(area.position.x - areaWidth/2, area.position.x + areaWidth/2),
+                    area.position.y,
+                    area.position.z + areaLength/2
+                );
+                break;
+            default: // Alt kenar
+                randomPoint = new Vector3(
+                    Random.Range(area.position.x - areaWidth/2, area.position.x + areaWidth/2),
+                    area.position.y,
+                    area.position.z - areaLength/2
+                );
+                break;
+        }
+
         return randomPoint;
     }
 
     public void OnEnemyDied()
     {
+
+          player = FindObjectOfType<Player>();
+        if (player == null)
+        {
+            Debug.LogError("Player not found!");
+            return;
+        }
+
+        ChessPieceType playerPieceType = player.CharacterData.pieceType;
+        Debug.Log($"Spawning enemies for player type: {playerPieceType}");
         //currentEnemyCount--; // Düşman öldüğünde sayıyı azalt
         //pawnEnemyNearPlayer(); // Yeni düşman spawnla
+         foreach (var enemyType in spawnSettings.enemyTypes)
+        {
+            if ((int)enemyType.pieceType <= (int)playerPieceType && Random.value < enemyType.spawnChance)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    SpawnEnemyInRandomArea(enemyType.pieceType);
+                }
+            }
+        }
+    }
+
+    private void CheckLevelComplete()
+    {
+      /*   if (activeEnemies.Count == 0 && totalSpawnedEnemies >= maxEnemies)
+        {
+            Debug.Log("Level Complete!");
+            SoundManager.Instance.PlayLevelCompleteSound();
+            _onLevelComplete.Raise();
+        } */
     }
 }

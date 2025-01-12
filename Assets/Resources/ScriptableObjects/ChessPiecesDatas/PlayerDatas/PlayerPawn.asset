@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21c53eed14ca841f29594c9190935bcf, type: 3}
-  m_Name: Queen
+  m_Name: PlayerPawn
   m_EditorClassIdentifier: 
-  pieceType: 4
-  requiredKillsToLevelUp: 3
+  pieceType: 0
+  requiredKillsToLevelUp: 10
   movementSpeed: 3
-  rotationSpeed: 7
+  rotationSpeed: 10
   jumpHeight: 1
   gravity: -20
   maxJumpCount: 1
   maxHealth: 100
   attackPower: 10
-  defense: 5
+  defense: 8
   attackRange: 2
   attackSpeed: 1
-  attackCooldown: 1
+  attackCooldown: 0.5
   areaAttackRange: 2
   attackChance: 100
   canUseShield: 0
