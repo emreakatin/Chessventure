@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 829440956554654350}
-  - component: {fileID: 6729196924909676788}
   m_Layer: 0
   m_Name: PawnMesh
   m_TagString: Untagged
@@ -34,28 +33,6 @@ Transform:
   - {fileID: 5175364859781960218}
   m_Father: {fileID: 3869217269354907397}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &6729196924909676788
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56599058947106868}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: caa16710420614081b606154de58ebac, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &172847226993572880
 GameObject:
   m_ObjectHideFlags: 0

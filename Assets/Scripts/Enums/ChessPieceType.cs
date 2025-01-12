@@ -1,9 +1,9 @@
 public enum ChessPieceType
 {
-    Pawn,   // Piyon - Level 0
-    Knight, // At   - Level 1
-    Bishop, // Fil  - Level 2
-    Rook,   // Kale - Level 3
-    Queen,  // Vezir - Level 4
-    King    // Şah  - Level 5
+    Pawn = 0,   // Piyon - Level 0
+    Knight = 1, // At   - Level 1
+    Bishop = 2, // Fil  - Level 2
+    Rook = 3,   // Kale - Level 3
+    Queen = 4,  // Vezir - Level 4
+    King = 5    // Şah  - Level 5
 } 

@@ -34,13 +34,19 @@ public class EnemySpawner : MonoBehaviour
     public void SpawnEnemies()
     {
         player = FindObjectOfType<Player>();
-        // Player'ın seviyesine göre düşmanları spawnla
+        if (player == null)
+        {
+            Debug.LogError("Player not found!");
+            return;
+        }
+
         ChessPieceType playerPieceType = player.CharacterData.pieceType;
+        Debug.Log($"Spawning enemies for player type: {playerPieceType}");
 
         // Düşman türlerini kontrol et ve spawnla
         foreach (var enemyType in spawnSettings.enemyTypes)
         {
-            if (enemyType.pieceType <= playerPieceType && Random.value < enemyType.spawnChance)
+            if ((int)enemyType.pieceType <= (int)playerPieceType && Random.value < enemyType.spawnChance)
             {
                 for (int i = 0; i < 20; i++)
                 {
@@ -54,23 +60,23 @@ public class EnemySpawner : MonoBehaviour
     {
         if (currentEnemyCount >= spawnSettings.maxEnemies) return;
 
-        // Get a random spawn area from the array
         Transform randomArea = spawnAreas[Random.Range(0, spawnAreas.Length)];
         Vector3 spawnPosition = GetRandomPositionInArea(randomArea);
 
-        // Havuzdan düşman al
         GameObject enemy = enemyPool.GetEnemy();
         if (enemy != null)
         {
-            enemy.transform.position = spawnPosition; // Pozisyonu ayarla
-            enemy.SetActive(true); // Düşmanı aktif et
+            enemy.transform.position = spawnPosition;
+            enemy.SetActive(true);
             enemy.transform.parent = transform;
             enemy.GetComponent<EnemyMovement>().NavMeshAgent.Warp(spawnPosition);
 
-            // Düşman için pieceType'ı ayarla
+
             Enemy enemyComponent = enemy.GetComponent<Enemy>();
-            enemyComponent.ChangePiece(pieceType); // ChangePiece fonksiyonunu çağır
+            enemyComponent.ChangePiece(pieceType);
             currentEnemyCount++;
+            
+            //Debug.Log($"Spawned enemy of type: {enemyComponent.CharacterData.pieceType}");
         }
     }
 
@@ -89,57 +95,5 @@ public class EnemySpawner : MonoBehaviour
     {
         //currentEnemyCount--; // Düşman öldüğünde sayıyı azalt
         //pawnEnemyNearPlayer(); // Yeni düşman spawnla
-    }
-
-   private void SpawnEnemyNearPlayer()
-{
-    // Spawn alanları içerisinde karaktere en yakın olanı bul
-    Transform nearestArea = FindNearestSpawnArea();
-    if (nearestArea != null)
-    {
-        player = FindObjectOfType<Player>(); // Get the player reference again
-        ChessPieceType playerPieceType = player.CharacterData.pieceType; // Get player's piece type
-
-        // SpawnEnemyByPieceType method will spawn based on the player's piece type
-        SpawnEnemyByPieceType(playerPieceType, nearestArea);
-    }
-}
-
-private void SpawnEnemyByPieceType(ChessPieceType pieceType, Transform area)
-{
-    if (currentEnemyCount >= spawnSettings.maxEnemies) return;
-
-    Vector3 spawnPosition = GetRandomPositionInArea(area); // Get a random position in the specified area
-
-     // Havuzdan düşman al
-        GameObject enemy = enemyPool.GetEnemy();
-        if (enemy != null)
-        {
-            enemy.transform.position = spawnPosition; // Pozisyonu ayarla
-            enemy.SetActive(true); // Düşmanı aktif et
-            enemy.transform.parent = transform;
-
-            // Düşman için pieceType'ı ayarla
-            Enemy enemyComponent = enemy.GetComponent<Enemy>();
-            enemyComponent.ChangePiece(pieceType); // ChangePiece fonksiyonunu çağır
-            currentEnemyCount++;
-        }
-}
-
-    private Transform FindNearestSpawnArea()
-    {
-        Transform nearest = null;
-        float closestDistance = Mathf.Infinity;
-
-        foreach (Transform area in spawnAreas)
-        {
-            float distance = Vector3.Distance(player.transform.position, area.position);
-            if (distance < closestDistance)
-            {
-                closestDistance = distance;
-                nearest = area;
-            }
-        }
-        return nearest;
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c53eed14ca841f29594c9190935bcf, type: 3}
   m_Name: Rook
   m_EditorClassIdentifier: 
-  pieceType: 0
+  pieceType: 3
   requiredKillsToLevelUp: 3
   movementSpeed: 3
   rotationSpeed: 7

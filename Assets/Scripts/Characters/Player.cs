@@ -34,6 +34,7 @@ public class Player : Character
     private void LoadPlayerLevel()
     {
         currentLevel = PlayerPrefs.GetInt(PLAYER_LEVEL_KEY, 0);
+        Debug.Log($"Loaded player level: {currentLevel}");
     }
 
     private void SavePlayerLevel()
@@ -44,14 +45,14 @@ public class Player : Character
 
     private void InitializePlayer()
     {
-        // Kaydedilen levele göre başlat
         ChessPieceType savedPieceType = (ChessPieceType)currentLevel;
+        Debug.Log($"Initializing player with piece type: {savedPieceType}");
         
-        // Geçerli bir piece type mı kontrol et
         if (!System.Enum.IsDefined(typeof(ChessPieceType), savedPieceType))
         {
             currentLevel = 0;
             savedPieceType = ChessPieceType.Pawn;
+            Debug.Log("Invalid piece type, resetting to Pawn");
         }
 
         ChangePiece(savedPieceType);

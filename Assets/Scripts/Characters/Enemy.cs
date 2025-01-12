@@ -29,7 +29,13 @@ public class Enemy : Character
     protected void Start()
     {
         player = FindObjectOfType<Player>();
-        InitializeEnemyType(player.CharacterData.pieceType);
+
+        if(currentPiece == null)
+        {
+            InitializeEnemyType(player.CurrentPieceType);
+              Debug.Log("Enemy Start");   
+        }
+      
         
     }
 
@@ -125,6 +131,7 @@ public class Enemy : Character
     {
         // Player'ın seviyesine göre random bir düşman tipi seç
         ChessPieceType enemyType = GetRandomEnemyType(playerPieceType);
+        Debug.Log("Enemy Initialize: " + enemyType);
         ChangePiece(enemyType);
     }
 
@@ -132,8 +139,18 @@ public class Enemy : Character
     {
         // Player'ın seviyesinden düşük veya eşit bir seviye seç
         int maxLevel = (int)playerPieceType;
+        //Debug.Log($"Player Piece Type: {playerPieceType} (Value: {maxLevel})");
+        
+        // maxLevel 0 ise en azından Pawn olsun
+        if (maxLevel < 0) maxLevel = 0;
+        
         int randomLevel = Random.Range(0, maxLevel + 1);
-        return (ChessPieceType)randomLevel;
+        //Debug.Log($"Random Enemy Level Selected: {randomLevel}");
+        
+        ChessPieceType selectedType = (ChessPieceType)randomLevel;
+        //Debug.Log($"Selected Enemy Type: {selectedType}");
+        
+        return selectedType;
     }
 
     protected override void OnPieceChanged()

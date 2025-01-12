@@ -20,9 +20,9 @@ public class EnemyMovement : CharacterMovement
     private bool isMovingRight = true; // Sağa mı sola mı hareket ediyor
 
     private float patrolDistance = 5f; // Nöbet mesafesi
-    private float waitTimeAtPatrolPoint = .5f; // Her noktada bekleme süresi
-    private float minPatrolDistance = 3f; // Minimum devriye mesafesi
-    private float animationSpeedThreshold = 0.1f; // Animasyon geçiş eşiği
+    private float waitTimeAtPatrolPoint = 1f; // Her noktada bekleme süresi
+    //private float minPatrolDistance = 6f; // Minimum devriye mesafesi
+    //private float animationSpeedThreshold = 0.1f; // Animasyon geçiş eşiği
 
 
 
@@ -48,6 +48,9 @@ public class EnemyMovement : CharacterMovement
     private void SetNewPatrolTarget()
     {
         // Sağa veya sola hareket yönünü belirle
+        patrolDistance = Random.Range(3f, 7f);
+        waitTimeAtPatrolPoint = Random.Range(1f, 2f);
+        
         Vector3 direction = isMovingRight ? Vector3.right : Vector3.left;
         currentPatrolTarget = patrolStartPoint + direction * patrolDistance;
 
@@ -55,6 +58,10 @@ public class EnemyMovement : CharacterMovement
         if (NavMesh.SamplePosition(currentPatrolTarget, out hit, patrolDistance, NavMesh.AllAreas))
         {
             currentPatrolTarget = hit.position;
+        }
+        else
+        {
+            Debug.LogError("NavMesh.SamplePosition failed to find a valid position");
         }
     }
 

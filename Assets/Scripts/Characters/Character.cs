@@ -9,12 +9,14 @@ public abstract class Character : MonoBehaviour
     protected IHealthSystem healthSystem;
 
     protected GameObject currentPieceInstance;
-    protected ChessPiece currentPiece;
+    public ChessPiece currentPiece;
     [SerializeField] protected Animator animator;
 
     protected bool isAttacking = false;
 
-    protected ChessPieceType CurrentPieceType => characterData?.pieceType ?? ChessPieceType.Pawn;
+    //protected ChessPieceType CurrentPieceType => characterData?.pieceType ?? ChessPieceType.Pawn;
+
+    public ChessPieceType CurrentPieceType => characterData?.pieceType ?? ChessPieceType.Pawn;
 
     public CharacterData CharacterData => characterData;
     public HealthSystem HealthSystem => healthSystem as HealthSystem; 
